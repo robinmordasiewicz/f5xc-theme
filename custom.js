@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formContainer.innerHTML = `
             <form id="set-pod-ip">
                 <label style="font-weight: 700;" for="pod_ip">Enter your Pod IP:</label>
-                <input style="border: 1px solid #ccc; outline: 1px solid #ccc; height: 1.5rem; padding:0px; padding-left:3px; padding-right:3px;" 
+                <input style="border: 1px solid #ccc; outline: 1px solid #ccc; height: 1.5rem; padding:0px; padding-left:3px; padding-right:3px;"
                        type="text" id="pod_ip" value="${previousIP}">
                 <button class="md-button" style="height: 1.5rem; padding:0px; padding-left:3px;padding-right:3px;" type="submit">Save</button>
             </form>

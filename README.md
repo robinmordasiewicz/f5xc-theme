@@ -1,6 +1,7 @@
 # F5 Distributed Cloud Theme
 
-A custom MkDocs Material theme for the F5 Distributed Cloud platform, providing Fortinet-branded styling, interactive features, and enhanced documentation capabilities.
+A custom MkDocs Material theme for the F5 Distributed Cloud platform, providing Fortinet-branded
+styling, interactive features, and enhanced documentation capabilities.
 
 ## Overview
 
@@ -105,18 +106,9 @@ Use placeholders in your content:
 Access your lab at: http://{{pod_ip}}:8080
 ```
 
-### Custom Admonitions
-
-Use the branded forti admonition:
-
-```markdown
-!!! forti "Important"
-    This is a Fortinet-branded callout box.
-```
-
 ## File Structure
 
-```
+```text
 theme/
 ├── mkdocs.yml              # Main theme configuration
 ├── custom.js               # Pod IP replacement functionality
@@ -131,6 +123,15 @@ theme/
 └── covers/                 # PDF export templates
     ├── front.html.j2       # PDF cover template
     └── stylesheets/        # PDF styling
+```
+
+### Custom Admonitions
+
+Use the branded forti admonition:
+
+```markdown
+!!! forti "Important"
+    This is a Fortinet-branded callout box.
 ```
 
 ## Development
@@ -160,27 +161,31 @@ yamllint mkdocs.yml
 This theme is designed for the F5 Distributed Cloud ecosystem and integrates with:
 
 - **GitOps Deployment**: Flux-managed documentation sites
-- **Multi-Repository Structure**: Shared theme across documentation projects  
+- **Multi-Repository Structure**: Shared theme across documentation projects
 - **Container Builds**: Docker-based documentation generation
 - **Automated Publishing**: CI/CD pipeline integration
 
 ## Brand Guidelines
 
 ### Logo Usage
+
 - Use `fabric.svg` for light mode
 - Use `fabric-white.svg` for dark mode
 - Maintain aspect ratio and sizing
 
 ### Color Palette
+
 - Primary: Fortinet Red (#da291c)
 - Background: White/Black (auto-switching)
 - Accent: Indigo for interactive elements
 
 ### Typography
+
 - Body text: Inter font family
 - Code blocks: Roboto Mono
 - Maintain consistent hierarchy and spacing
 
 ## License
 
-This theme is part of the F5 Distributed Cloud platform and follows Fortinet's brand guidelines and usage policies.
+This theme is part of the F5 Distributed Cloud platform and follows Fortinet's
+brand guidelines and usage policies.
