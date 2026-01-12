@@ -16,14 +16,47 @@ on: # yamllint disable-line rule:truthy
       - '.github/**'
 
 jobs:
-  terraform:
-    name: "Trigger Build"
+  notify-downstream:
+    name: Notify Downstream Repositories
     runs-on: ubuntu-latest
-    steps:
+    strategy:
+      fail-fast: false  # Continue dispatching even if one fails
+      matrix:
+        downstream:
+          - owner: robinmordasiewicz
+            repo: vscode-f5xc-tools
+            event_type: theme-updated
+          # Add more repositories here as needed:
+          # - owner: robinmordasiewicz
+          #   repo: another-repo
+          #   event_type: theme-updated
 
-      - name: Repository Dispatch
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get commit metadata
+        id: metadata
+        run: |
+          echo "commit_sha=${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "commit_short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_OUTPUT
+          echo "trigger_run_id=${{ github.run_id }}" >> $GITHUB_OUTPUT
+
+      - name: Dispatch to ${{ matrix.downstream.repo }}
         uses: peter-evans/repository-dispatch@ff45666b9427631e3450c54a1bcbee4d9ff4d7c0
         with:
           token: ${{ secrets.PAT }}
-          repository: ${{ github.repository_owner }}/${{ vars.DOCS_BUILDER_REPO_NAME }}
-          event-type: ${{ vars.DOCS_BUILDER_REPO_NAME }}
+          repository: ${{ matrix.downstream.owner }}/${{ matrix.downstream.repo }}
+          event-type: ${{ matrix.downstream.event_type }}
+          client-payload: |
+            {
+              "source_repo": "${{ github.repository }}",
+              "commit_sha": "${{ steps.metadata.outputs.commit_sha }}",
+              "commit_short_sha": "${{ steps.metadata.outputs.commit_short_sha }}",
+              "timestamp": "${{ steps.metadata.outputs.timestamp }}",
+              "trigger_source": "${{ github.repository }}",
+              "trigger_run_id": "${{ steps.metadata.outputs.trigger_run_id }}",
+              "trigger_run_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "branch": "${{ github.ref_name }}"
+            }
